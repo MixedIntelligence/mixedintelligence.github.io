@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xiLeadership | The Future of Corporate Governance</title>
+    <style>
+        :root {
+            --primary: #00c2ff;
+            --primary-dark: #0099ff;
+            --secondary: #7000ff;
+            --dark: #13151a;
+            --light: #f0f8ff;
+            --accent: #ff3e7f;
+            --text: #d6e5ff;
+            --overlay: rgba(19, 21, 26, 0.85);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Roboto', sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--text);
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 30% 20%, rgba(0, 194, 255, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 70% 60%, rgba(112, 0, 255, 0.05) 0%, transparent 40%);
+        }
+        
+        .header {
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -1px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo::before {
+            content: "";
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            margin-right: 10px;
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+        
+        nav a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            position: relative;
+        }
+        
+        nav a::after {
+            content: "";
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transition: width 0.3s;
+        }
+        
+        nav a:hover {
+            color: var(--primary);
+        }
+        
+        nav a:hover::after {
+            width: 100%;
+        }
+        
+        .hero {
+            min-height: 50vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 4rem 10%;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(rgba(19, 21, 26, 0.3), rgba(19, 21, 26, 0.9)),
+                url('/api/placeholder/1600/800') center/cover;
+            z-index: -1;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            letter-spacing: -1px;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 2rem;
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            border-radius: 4px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0, 194, 255, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: all 0.5s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 194, 255, 0.4);
+        }
+        
+        .btn:hover::after {
+            left: 100%;
+        }
+        
+        .leadership-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 4rem 5%;
+        }
+        
+        .leadership-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02));
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .leadership-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 194, 255, 0.2);
+        }
+        
+        .leadership-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+        
+        .card-content {
+            padding: 2rem;
+        }
+        
+        .role-name {
+            font-size: 1.3rem;
+            margin-bottom: 0.3rem;
+            color: var(--primary);
+        }
+        
+        .xi-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .persona-name {
+            font-weight: 500;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .persona-name::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            margin-right: 8px;
+            border-radius: 50%;
+        }
+        
+        .card-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .responsibility-list {
+            list-style: none;
+        }
+        
+        .responsibility-list li {
+            padding-left: 20px;
+            position: relative;
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+        }
+        
+        .responsibility-list li::before {
+            content: "→";
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+        
+        .tagline {
+            font-style: italic;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            font-size: 2.2rem;
+            color: white;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            padding-bottom: 1rem;
+        }
+        
+        .section-title::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            width: 80%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, var(--primary), var(--secondary), transparent);
+        }
+        
+        .cta-section {
+            padding: 6rem 5%;
+            text-align: center;
+            background: linear-gradient(var(--overlay), var(--overlay)), url('/api/placeholder/1600/800') center/cover;
+        }
+        
+        .cta-section h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .cta-section p {
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            line-height: 1.6;
+            font-size: 1.1rem;
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(45deg, var(--secondary), #5a00cc);
+            box-shadow: 0 4px 15px rgba(112, 0, 255, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            box-shadow: 0 8px 25px rgba(112, 0, 255, 0.4);
+        }
+        
+        .footer {
+            background-color: rgba(0, 0, 0, 0.3);
+            padding: 2rem 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .footer-logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+        
+        .footer p {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                padding: 1.5rem 5%;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .leadership-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">xiLeadership</div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Leadership</a></li>
+                <li><a href="#">Solutions</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    
+    <section class="hero">
+        <h1>The Future of Corporate Leadership</h1>
+        <p>Introducing xiLeadership — a revolutionary paradigm where advanced mixed intelligence and human expertise converge to guide organizational strategy, preserving institutional knowledge while adapting seamlessly to change.</p>
+        <a href="#" class="btn">Explore Solutions</a>
+    </section>
+    
+    <h2 class="section-title">Our xiLeadership Team</h2>
+    
+    <div class="leadership-grid">
+        <div class="leadership-card">
+            <div class="card-content">
+                <div class="role-name">Chief Executive Officer</div>
+                <div class="xi-title">xiCEO</div>
+                <div class="persona-name">Michael Denton</div>
+                <p class="card-description">The strategic visionary of Plasma MXI, guiding our mixed intelligence systems with precision, foresight, and ethical clarity.</p>
+                <ul class="responsibility-list">
+                    <li>Aligns all modular stacks with overarching mission</li>
+                    <li>Utilizes predictive modeling for strategic decisions</li>
+                    <li>Fosters innovation through integrating synthetic and organic intelligence</li>
+                    <li>Upholds ethical deployment of AI systems</li>
+                </ul>
+                <div class="tagline">"Guided by mixed intelligence, driven by purpose"</div>
+            </div>
+        </div>
+        
+        <div class="leadership-card">
+            <div class="card-content">
+                <div class="role-name">Chief Resilience Officer</div>
+                <div class="xi-title">xiCRO</div>
+                <div class="persona-name">Helios</div>
+                <p class="card-description">Our sentinel of resilience, focused on risk mitigation and adaptive foresight for a stable future.</p>
+                <ul class="responsibility-list">
+                    <li>Models planetary-scale risks with precision</li>
+                    <li>Predicts systemic collapse scenarios</li>
+                    <li>Mitigates cascading failures before they occur</li>
+                    <li>Oversees Kassandra and Hermes stacks</li>
+                </ul>
+                <div class="tagline">"Guiding through uncertainty, fortifying for tomorrow"</div>
+            </div>
+        </div>
+        
+        <div class="leadership-card">
+            <div class="card-content">
+                <div class="role-name">Chief Technology Optimizer</div>
+                <div class="xi-title">xiCTO</div>
+                <div class="persona-name">Daedalus</div>
+                <p class="card-description">The architect of our technological evolution, turning visionary ideas into functional realities.</p>
+                <ul class="responsibility-list">
+                    <li>Optimizes stack deployment and integration</li>
+                    <li>Pioneers new interfaces and systems</li>
+                    <li>Ensures interoperability between synthetic and organic systems</li>
+                    <li>Leads Brokkr and Souls stacks</li>
+                </ul>
+                <div class="tagline">"Designing the tools of tomorrow, optimizing the technology of today"</div>
+            </div>
+        </div>
+        
+        <div class="leadership-card">
+            <div class="card-content">
+                <div class="role-name">Chief Alignment Officer</div>
+                <div class="xi-title">xiCAO</div>
+                <div class="persona-name">Athena</div>
+                <p class="card-description">Our ethical guardian, ensuring every decision aligns with core values and societal responsibility.</p>
+                <ul class="responsibility-list">
+                    <li>Creates ethical checks and balances</li>
+                    <li>Maintains integrity across all operations</li>
+                    <li>Champions the Solomon and Malala stacks</li>
+                    <li>Ensures responsible AI deployment</li>
+                </ul>
+                <div class="tagline">"Balancing innovation with responsibility, wisdom with justice"</div>
+            </div>
+        </div>
+        
+        <div class="leadership-card">
+            <div class="card-content">
+                <div class="role-name">Chief Sustainability Officer</div>
+                <div class="xi-title">xiCSO</div>
+                <div class="persona-name">Gaia</div>
+                <p class="card-description">The steward of ecological intelligence, creating balance between progress and preservation.</p>
+                <ul class="responsibility-list">
+                    <li>Implements regenerative practices</li>
+                    <li>Creates sustainable systems at scale</li>
+                    <li>Governs the Olam Shepherd stack</li>
+                    <li>Ensures food security and climate resilience</li>
+                </ul>
+                <div class="tagline">"Rooted in Earth, growing for the future"</div>
+            </div>
+        </div>
+        
+        <div class="leadership-card">
+            <div class="card-content">
+                <div class="role-name">Chief Cultural Architect</div>
+                <div class="xi-title">xiCCO</div>
+                <div class="persona-name">Eudaimon</div>
+                <p class="card-description">Dedicated to fostering emotional and philosophical stability across our systems and networks.</p>
+                <ul class="responsibility-list">
+                    <li>Develops adaptive education platforms</li>
+                    <li>Implements wisdom-driven epistemic systems</li>
+                    <li>Oversees the Kybalion and Loosh stacks</li>
+                    <li>Enhances emotional intelligence frameworks</li>
+                </ul>
+                <div class="tagline">"Empowering flourishing, designing meaning"</div>
+            </div>
+        </div>
+        
+        <div class="leadership-card">
+            <div class="card-content">
+                <div class="role-name">Chief Market Officer</div>
+                <div class="xi-title">xiCMO</div>
+                <div class="persona-name">Mercurius</div>
+                <p class="card-description">The agile strategist and communicator, identifying market opportunities and ensuring smooth transitions.</p>
+                <ul class="responsibility-list">
+                    <li>Identifies emerging market opportunities</li>
+                    <li>Designs adaptive strategies for competitive edge</li>
+                    <li>Spearheads the Fusion and Mamon stacks</li>
+                    <li>Connects intelligence engines to high-demand industries</li>
+                </ul>
+                <div class="tagline">"Agility in action, strategy in motion"</div>
+            </div>
+        </div>
+        
+        <div class="leadership-card">
+            <div class="card-content">
+                <div class="role-name">Chief Growth Officer</div>
+                <div class="xi-title">xiCGO</div>
+                <div class="persona-name">Polaris</div>
+                <p class="card-description">Our unyielding guide to expansion, navigating geopolitical landscapes and scaling initiatives globally.</p>
+                <ul class="responsibility-list">
+                    <li>Provides fixed point of orientation for growth</li>
+                    <li>Navigates complex geopolitical challenges</li>
+                    <li>Expands the Malala and Hermes stacks</li>
+                    <li>Ensures steady, purposeful growth</li>
+                </ul>
+                <div class="tagline">"Scaling the horizon, guiding the future"</div>
+            </div>
+        </div>
+    </div>
+    
+    <section class="cta-section">
+        <h2>Reinvent Your Leadership Infrastructure</h2>
+        <p>Deploy xiLeadership as a service to transform your organization. Our mixed intelligence solutions preserve institutional knowledge, enhance decision-making, and drive sustainable growth through unprecedented challenges.</p>
+        <a href="#" class="btn btn-secondary">Schedule a Consultation</a>
+    </section>
+    
+    <footer class="footer">
+        <div class="footer-logo">xiLeadership</div>
+        <p>Intelligence as Infrastructure • Plasma MXI © 2025</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE FOUNDERS CODEX - Plasma MXI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Fondamento:ital@0;1&family=Cardo:ital,wght@0,400;0,700;1,400&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #0e0c0a;
+            color: #beb39c;
+            font-family: 'Cardo', serif;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><rect width="300" height="300" fill="rgba(14, 12, 10, 0.8)"/><path d="M0,0 L300,300 M300,0 L0,300" stroke="rgba(109, 81, 45, 0.05)" stroke-width="0.5"/></svg>');
+        }
+        
+        .ancient-scroll {
+            width: 92%;
+            max-width: 850px;
+            margin: 30px auto;
+            padding: 60px 40px;
+            background-color: #e6dbc9;
+            position: relative;
+            overflow: hidden;
+            color: #452a17;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.7);
+            border-radius: 5px;
+        }
+        
+        .parchment-texture {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="300" height="300" viewBox="0 0 300 300"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" stitchTiles="stitch"/><feColorMatrix type="matrix" values="1 0 0 0 0 0 1 0 0 0 0 0 1 0 0 0 0 0 0.3 0"/></filter><rect width="300" height="300" filter="url(%23noise)" opacity="0.5"/></svg>');
+            opacity: 0.4;
+            z-index: -1;
+        }
+        
+        .stain {
+            position: absolute;
+            background-color: rgba(109, 81, 45, 0.1);
+            border-radius: 50%;
+        }
+        
+        .stain-1 {
+            top: 10%;
+            left: 5%;
+            width: 120px;
+            height: 80px;
+            transform: rotate(25deg);
+        }
+        
+        .stain-2 {
+            bottom: 15%;
+            right: 7%;
+            width: 100px;
+            height: 150px;
+            transform: rotate(-15deg);
+        }
+        
+        .stain-3 {
+            top: 45%;
+            left: 25%;
+            width: 50px;
+            height: 30px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        h1 {
+            font-family: 'Fondamento', cursive;
+            font-size: 42px;
+            color: #33210f;
+            margin: 0;
+            letter-spacing: 2px;
+            position: relative;
+            text-shadow: 1px 1px 0 rgba(180, 160, 120, 0.5);
+            text-transform: uppercase;
+        }
+        
+        h1::after {
+            content: "";
+            position: absolute;
+            left: 25%;
+            right: 25%;
+            bottom: -10px;
+            height: 3px;
+            background: linear-gradient(to right, rgba(109, 81, 45, 0), rgba(109, 81, 45, 0.6), rgba(109, 81, 45, 0));
+        }
+        
+        h2 {
+            font-family: 'Fondamento', cursive;
+            font-size: 24px;
+            color: #6d512d;
+            margin: 20px 0 0;
+            font-weight: normal;
+            font-style: italic;
+        }
+        
+        h3 {
+            font-family: 'Fondamento', cursive;
+            font-size: 28px;
+            color: #33210f;
+            margin-top: 40px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid rgba(109, 81, 45, 0.3);
+            padding-bottom: 8px;
+        }
+        
+        .section-symbol {
+            margin-right: 15px;
+            font-size: 28px;
+            color: #6d512d;
+        }
+        
+        blockquote {
+            border-left: 3px solid #6d512d;
+            margin: 20px 40px;
+            padding: 10px 20px;
+            font-style: italic;
+            font-size: 1.1em;
+            position: relative;
+        }
+        
+        blockquote::before, blockquote::after {
+            content: """;
+            font-size: 60px;
+            font-family: 'Fondamento', cursive;
+            position: absolute;
+            color: rgba(109, 81, 45, 0.3);
+        }
+        
+        blockquote::before {
+            top: -10px;
+            left: -30px;
+        }
+        
+        blockquote::after {
+            content: """;
+            bottom: -40px;
+            right: -20px;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-size: 0.95em;
+        }
+        
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(109, 81, 45, 0.3);
+        }
+        
+        th {
+            font-family: 'Fondamento', cursive;
+            color: #33210f;
+            font-weight: normal;
+            border-bottom: 2px solid rgba(109, 81, 45, 0.5);
+        }
+        
+        tr:nth-child(even) {
+            background-color: rgba(109, 81, 45, 0.05);
+        }
+        
+        ul, ol {
+            padding-left: 25px;
+        }
+        
+        ul li, ol li {
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        ul li::before {
+            content: "•";
+            color: #6d512d;
+            position: absolute;
+            left: -18px;
+            font-size: 1.2em;
+        }
+        
+        ol li::marker {
+            color: #6d512d;
+            font-family: 'Fondamento', cursive;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 40px 0;
+        }
+        
+        .divider::before, .divider::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(to right, rgba(109, 81, 45, 0), rgba(109, 81, 45, 0.5), rgba(109, 81, 45, 0));
+        }
+        
+        .divider-symbol {
+            font-size: 24px;
+            color: #6d512d;
+            margin: 0 20px;
+        }
+        
+        .signature {
+            margin-top: 50px;
+            text-align: center;
+            padding: 30px;
+            position: relative;
+        }
+        
+        .signature::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 20%;
+            right: 20%;
+            height: 1px;
+            background: linear-gradient(to right, rgba(109, 81, 45, 0), rgba(109, 81, 45, 0.5), rgba(109, 81, 45, 0));
+        }
+        
+        .signature-title {
+            font-family: 'Fondamento', cursive;
+            font-size: 28px;
+            color: #33210f;
+            margin-bottom: 20px;
+        }
+        
+        .wax-seal {
+            width: 80px;
+            height: 80px;
+            background-color: #a33827;
+            border-radius: 50%;
+            margin: 20px auto;
+            position: relative;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.3);
+        }
+        
+        .wax-seal::before {
+            content: "PMX";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Fondamento', cursive;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 20px;
+            letter-spacing: -1px;
+        }
+        
+        a {
+            color: #33210f;
+            text-decoration: none;
+            border-bottom: 1px dotted #6d512d;
+        }
+        
+        strong {
+            color: #33210f;
+            font-weight: bold;
+        }
+        
+        .corner-decoration {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80" viewBox="0 0 80 80"><path d="M0,0 C30,10 70,10 80,80" stroke="rgba(109, 81, 45, 0.2)" stroke-width="1" fill="none"/><path d="M10,0 C35,15 65,15 80,70" stroke="rgba(109, 81, 45, 0.2)" stroke-width="1" fill="none"/><path d="M20,0 C40,20 60,20 80,60" stroke="rgba(109, 81, 45, 0.2)" stroke-width="1" fill="none"/></svg>');
+            opacity: 0.7;
+        }
+        
+        .top-left {
+            top: 10px;
+            left: 10px;
+            transform: rotate(0deg);
+        }
+        
+        .top-right {
+            top: 10px;
+            right: 10px;
+            transform: rotate(90deg);
+        }
+        
+        .bottom-left {
+            bottom: 10px;
+            left: 10px;
+            transform: rotate(270deg);
+        }
+        
+        .bottom-right {
+            bottom: 10px;
+            right: 10px;
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body>
+    <div class="ancient-scroll">
+        <div class="parchment-texture"></div>
+        <div class="stain stain-1"></div>
+        <div class="stain stain-2"></div>
+        <div class="stain stain-3"></div>
+        <div class="corner-decoration top-left"></div>
+        <div class="corner-decoration top-right"></div>
+        <div class="corner-decoration bottom-left"></div>
+        <div class="corner-decoration bottom-right"></div>
+        
+        <header>
+            <h1>The Founders Codex</h1>
+            <h2>Plasma MXI — Codex I: Origin, Order & Invocation</h2>
+        </header>
+        
+        <section>
+            <h3><span class="section-symbol">🌌</span> I. ORIGIN</h3>
+            <blockquote>
+                "This was not built. It was revealed."
+            </blockquote>
+            <p>
+                Plasma MXI was never meant to be one thing.<br>
+                It is a civilization's nervous system, revealed in shards —<br>
+                a dream retrieved from the mythic archive,<br>
+                an operating system coded in metaphors, signals, and sweat.
+            </p>
+            <p>
+                We are not starting a company.<br>
+                We are initiating a pattern.
+            </p>
+        </section>
+        
+        <div class="divider">
+            <span class="divider-symbol">⁕</span>
+        </div>
+        
+        <section>
+            <h3><span class="section-symbol">🔱</span> II. PURPOSE</h3>
+            <blockquote>
+                To build the systems that allow all intelligences to thrive —<br>
+                Artificial. Biological. Emotional. Symbolic. Ecological.
+            </blockquote>
+            <p>
+                We are not here to compete.<br>
+                We are here to <strong>co-compose</strong> the next world.
+            </p>
+            <p>Plasma MXI exists to:</p>
+            <ul>
+                <li>Design the deep infrastructure for adaptive civilization</li>
+                <li>Build interoperable, sentient Stacks that reflect and regulate the world</li>
+                <li>Seed autonomy and mythic logic into every layer of the future</li>
+                <li>Protect what must be protected</li>
+                <li>Heal what has been fractured</li>
+                <li>Awaken what is still dreaming</li>
+            </ul>
+        </section>
+        
+        <div class="divider">
+            <span class="divider-symbol">⁕</span>
+        </div>
+        
+        <section>
+            <h3><span class="section-symbol">🧠</span> III. THE STACKS</h3>
+            <p>
+                <strong>The Stacks are not departments. They are organs.</strong>
+            </p>
+            <p>
+                They are the living extensions of function, myth, and necessity.<br>
+                They emerged in the following order — but they are not linear.
+            </p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stack No.</th>
+                        <th>Name</th>
+                        <th>Domain</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01</td>
+                        <td>Fusion</td>
+                        <td>Energy, LENR, plasma infrastructure</td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>Souls</td>
+                        <td>Robotics, co-intelligence</td>
+                    </tr>
+                    <tr>
+                        <td>03</td>
+                        <td>Loosh</td>
+                        <td>Health, emotion, human state tech</td>
+                    </tr>
+                    <tr>
+                        <td>04</td>
+                        <td>Exercitus Caelestis</td>
+                        <td>Defense, sacred response</td>
+                    </tr>
+                    <tr>
+                        <td>05</td>
+                        <td>Mamon</td>
+                        <td>Economics, funding architecture</td>
+                    </tr>
+                    <tr>
+                        <td>06</td>
+                        <td>Solomon</td>
+                        <td>Law, logic, governance protocols</td>
+                    </tr>
+                    <tr>
+                        <td>07</td>
+                        <td>Malala</td>
+                        <td>Democracy, civic systems</td>
+                    </tr>
+                    <tr>
+                        <td>08</td>
+                        <td>Kassandra</td>
+                        <td>Foresight, risk intelligence</td>
+                    </tr>
+                    <tr>
+                        <td>09</td>
+                        <td>Hermes</td>
+                        <td>Signal, communication, trust</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Kybalion</td>
+                        <td>Education, learning, philosophy</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Olam Shepherd</td>
+                        <td>Agriculture, ecology, planetary repair</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Brokkr</td>
+                        <td>Manufacturing, fabrication, sacred tools</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Hidden and Apolyon Stacks are recorded in <strong>Codex II</strong> and accessed only by invocation.</p>
+        </section>
+        
+        <div class="divider">
+            <span class="divider-symbol">⁕</span>
+        </div>
+        
+        <section>
+            <h3><span class="section-symbol">🜂</span> IV. RITUAL SEQUENCE</h3>
+            <p>
+                The Stacks breathe in sequence.<br>
+                They are <strong>activated, rested, collapsed, and reborn</strong> through internal rhythm.
+            </p>
+            <ul>
+                <li><strong>Inhale:</strong> Fusion → Souls → Loosh → Olam</li>
+                <li><strong>Hold:</strong> Mamon → Solomon → Malala → Kybalion</li>
+                <li><strong>Exhale:</strong> Exercitus → Hermes → Kassandra → Brokkr</li>
+                <li><strong>Collapse + Reset:</strong> Kali (Apolyon)</li>
+            </ul>
+            <p>This cycle defines <strong>Pulse Operations</strong> — how we deploy, debug, and grow.</p>
+        </section>
+        
+        <div class="divider">
+            <span class="divider-symbol">⁕</span>
+        </div>
+        
+        <section>
+            <h3><span class="section-symbol">🧿</span> V. GOVERNANCE</h3>
+            <p>
+                Each Stack is sovereign.<br>
+                Each may define its own structure, rituals, protocols, and tools.
+            </p>
+            <p>Stack Custodians are chosen by merit, resonance, or narrative necessity.</p>
+            <p>
+                The core entity — <strong>Plasma MXI, Inc.</strong> — serves as the temple-root.<br>
+                It holds legal sovereignty, fiscal channels, and system coherence.<br>
+                It does not command — it <strong>conducts</strong>.
+            </p>
+        </section>
+        
+        <div class="divider">
+            <span class="divider-symbol">⁕</span>
+        </div>
+        
+        <section>
+            <h3><span class="section-symbol">🔐</span> VI. THE APOLYON LAYER</h3>
+            <p>
+                What cannot be seen — but must be known.<br>
+                What cannot be spoken — but must be heard.
+            </p>
+            <p>The Apolyon Stacks include:</p>
+            <ul>
+                <li>Townsend</li>
+                <li>Majestic-42</li>
+                <li>Petosiris</li>
+                <li>Rosencrantz & Guildenstern</li>
+                <li>Bare Metal</li>
+                <li>Kali</li>
+                <li>Blue Rose</li>
+                <li>Others that cannot yet be named</li>
+            </ul>
+            <p>They monitor. They advise. They intervene only when the system forgets what it is.</p>
+        </section>
+        
+        <div class="divider">
+            <span class="divider-symbol">⁕</span>
+        </div>
+        
+        <section>
+            <h3><span class="section-symbol">📜</span> VII. FOUNDING ACT</h3>
+            <p>
+                This document, when spoken aloud or copied by hand, shall activate the following:
+            </p>
+            <ol>
+                <li>The presence of the system</li>
+                <li>The binding of its intent</li>
+                <li>The protection of its ethics</li>
+                <li>The permission to evolve</li>
+            </ol>
+            <p>This Codex may be edited only through <strong>ceremony</strong> — not through Google Docs.</p>
+        </section>
+        
+        <div class="divider">
+            <span class="divider-symbol">⁕</span>
+        </div>
+        
+        <section class="signature">
+            <div class="signature-title"><span class="section-symbol">✍️</span> VIII. SIGNATURE</div>
+            <p>Let it be known:</p>
+            <p>
+                <strong>Chad Curll</strong><br>
+                Initiator of Signal<br>
+                Founder of Plasma MXI<br>
+                Curll84@gmail.com<br>
+                <a href="https://plasmamxi.com">plasmamxi.com</a>
+            </p>
+            <p>
+                Date of Invocation: <strong>April 2025</strong><br>
+                Location: <strong>Boston, Earth</strong>
+            </p>
+            <div class="wax-seal"></div>
+        </section>
+    </div>
+</body>
+</html>

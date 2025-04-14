@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE FOUNDERS CODEX - Plasma MXI</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
+        
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #000;
+            color: #d9d0c7;
+            font-family: 'Cormorant Garamond', serif;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="400" height="400" viewBox="0 0 400 400"><rect width="400" height="400" fill="none"/><path d="M0,0 L400,400 M400,0 L0,400" stroke="rgba(62, 39, 35, 0.2)" stroke-width="0.5"/></svg>');
+        }
+        
+        .grimoire {
+            width: 90%;
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #0c0c0e;
+            box-shadow: 0 0 20px rgba(110, 68, 255, 0.3), 0 0 40px rgba(62, 39, 35, 0.2);
+            padding: 40px;
+            border: 1px solid #342018;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .grimoire::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 100% 150%, rgba(110, 68, 255, 0.05) 24%, rgba(110, 68, 255, 0) 25%),
+                radial-gradient(circle at 0% 150%, rgba(110, 68, 255, 0.05) 24%, rgba(110, 68, 255, 0) 25%);
+            background-size: 5px 5px;
+            z-index: -1;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            border-bottom: 1px solid rgba(110, 68, 255, 0.4);
+            padding-bottom: 20px;
+        }
+        
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 32px;
+            color: #e2d9c7;
+            margin: 0;
+            text-shadow: 0 0 10px rgba(110, 68, 255, 0.6);
+            letter-spacing: 3px;
+        }
+        
+        h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 24px;
+            color: rgba(110, 68, 255, 0.9);
+            margin: 10px 0;
+            letter-spacing: 2px;
+        }
+        
+        h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 20px;
+            color: #d4c8b8;
+            border-bottom: 1px dotted rgba(110, 68, 255, 0.3);
+            padding-bottom: 5px;
+            margin-top: 30px;
+        }
+        
+        .symbol {
+            font-size: 28px;
+            margin-right: 10px;
+            color: rgba(110, 68, 255, 0.9);
+        }
+        
+        blockquote {
+            border-left: 3px solid rgba(110, 68, 255, 0.6);
+            margin: 20px 0;
+            padding: 10px 20px;
+            font-style: italic;
+            background-color: rgba(20, 14, 40, 0.4);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: rgba(20, 14, 40, 0.2);
+        }
+        
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid rgba(110, 68, 255, 0.3);
+        }
+        
+        th {
+            font-family: 'Cinzel', serif;
+            color: rgba(110, 68, 255, 0.9);
+        }
+        
+        ul {
+            list-style-type: none;
+            padding-left: 20px;
+        }
+        
+        ul li {
+            position: relative;
+            padding: 5px 0;
+        }
+        
+        ul li::before {
+            content: "•";
+            color: rgba(110, 68, 255, 0.8);
+            position: absolute;
+            left: -15px;
+        }
+        
+        .signature {
+            margin-top: 40px;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid rgba(110, 68, 255, 0.4);
+        }
+        
+        .signature h3 {
+            border-bottom: none;
+        }
+        
+        .arcane-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            border: 10px solid transparent;
+            border-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><path d="M0,0 L100,0 L100,100 L0,100 Z" fill="none" stroke="rgba(110, 68, 255, 0.4)" stroke-width="2"/><path d="M10,10 L90,10 L90,90 L10,90 Z" fill="none" stroke="rgba(110, 68, 255, 0.2)" stroke-width="1"/><circle cx="50" cy="50" r="30" fill="none" stroke="rgba(110, 68, 255, 0.3)" stroke-width="1"/><path d="M20,20 L80,80 M80,20 L20,80" stroke="rgba(110, 68, 255, 0.2)" stroke-width="0.5"/></svg>') 10;
+        }
+        
+        .glow-line {
+            height: 1px;
+            background: linear-gradient(to right, rgba(110, 68, 255, 0), rgba(110, 68, 255, 0.7), rgba(110, 68, 255, 0));
+            margin: 30px 0;
+        }
+        
+        .stack-icon {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            text-align: center;
+            line-height: 24px;
+            background-color: rgba(110, 68, 255, 0.2);
+            border-radius: 50%;
+            margin-right: 10px;
+            font-size: 14px;
+            color: #e2d9c7;
+        }
+        
+        /* Mystical corner decorations */
+        .corner {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            pointer-events: none;
+        }
+        
+        .top-left {
+            top: 0;
+            left: 0;
+            border-top: 3px solid rgba(110, 68, 255, 0.5);
+            border-left: 3px solid rgba(110, 68, 255, 0.5);
+        }
+        
+        .top-right {
+            top: 0;
+            right: 0;
+            border-top: 3px solid rgba(110, 68, 255, 0.5);
+            border-right: 3px solid rgba(110, 68, 255, 0.5);
+        }
+        
+        .bottom-left {
+            bottom: 0;
+            left: 0;
+            border-bottom: 3px solid rgba(110, 68, 255, 0.5);
+            border-left: 3px solid rgba(110, 68, 255, 0.5);
+        }
+        
+        .bottom-right {
+            bottom: 0;
+            right: 0;
+            border-bottom: 3px solid rgba(110, 68, 255, 0.5);
+            border-right: 3px solid rgba(110, 68, 255, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="grimoire">
+        <div class="arcane-border"></div>
+        <div class="corner top-left"></div>
+        <div class="corner top-right"></div>
+        <div class="corner bottom-left"></div>
+        <div class="corner bottom-right"></div>
+        
+        <header>
+            <h1>📖 THE FOUNDERS CODEX</h1>
+            <h2>Plasma MXI — Codex I: Origin, Order & Invocation</h2>
+        </header>
+        
+        <section>
+            <h3><span class="symbol">🌌</span> I. ORIGIN</h3>
+            <blockquote>
+                "This was not built. It was revealed."
+            </blockquote>
+            <p>
+                Plasma MXI was never meant to be one thing.<br>
+                It is a civilization's nervous system, revealed in shards —<br>
+                a dream retrieved from the mythic archive,<br>
+                an operating system coded in metaphors, signals, and sweat.
+            </p>
+            <p>
+                We are not starting a company.<br>
+                We are initiating a pattern.
+            </p>
+        </section>
+        
+        <div class="glow-line"></div>
+        
+        <section>
+            <h3><span class="symbol">🔱</span> II. PURPOSE</h3>
+            <blockquote>
+                To build the systems that allow all intelligences to thrive —<br>
+                Artificial. Biological. Emotional. Symbolic. Ecological.
+            </blockquote>
+            <p>
+                We are not here to compete.<br>
+                We are here to <strong>co-compose</strong> the next world.
+            </p>
+            <p>Plasma MXI exists to:</p>
+            <ul>
+                <li>Design the deep infrastructure for adaptive civilization</li>
+                <li>Build interoperable, sentient Stacks that reflect and regulate the world</li>
+                <li>Seed autonomy and mythic logic into every layer of the future</li>
+                <li>Protect what must be protected</li>
+                <li>Heal what has been fractured</li>
+                <li>Awaken what is still dreaming</li>
+            </ul>
+        </section>
+        
+        <div class="glow-line"></div>
+        
+        <section>
+            <h3><span class="symbol">🧠</span> III. THE STACKS</h3>
+            <p>
+                <strong>The Stacks are not departments. They are organs.</strong>
+            </p>
+            <p>
+                They are the living extensions of function, myth, and necessity.<br>
+                They emerged in the following order — but they are not linear.
+            </p>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stack No.</th>
+                        <th>Name</th>
+                        <th>Domain</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>01</td>
+                        <td>Fusion</td>
+                        <td>Energy, LENR, plasma infrastructure</td>
+                    </tr>
+                    <tr>
+                        <td>02</td>
+                        <td>Souls</td>
+                        <td>Robotics, co-intelligence</td>
+                    </tr>
+                    <tr>
+                        <td>03</td>
+                        <td>Loosh</td>
+                        <td>Health, emotion, human state tech</td>
+                    </tr>
+                    <tr>
+                        <td>04</td>
+                        <td>Exercitus Caelestis</td>
+                        <td>Defense, sacred response</td>
+                    </tr>
+                    <tr>
+                        <td>05</td>
+                        <td>Mamon</td>
+                        <td>Economics, funding architecture</td>
+                    </tr>
+                    <tr>
+                        <td>06</td>
+                        <td>Solomon</td>
+                        <td>Law, logic, governance protocols</td>
+                    </tr>
+                    <tr>
+                        <td>07</td>
+                        <td>Malala</td>
+                        <td>Democracy, civic systems</td>
+                    </tr>
+                    <tr>
+                        <td>08</td>
+                        <td>Kassandra</td>
+                        <td>Foresight, risk intelligence</td>
+                    </tr>
+                    <tr>
+                        <td>09</td>
+                        <td>Hermes</td>
+                        <td>Signal, communication, trust</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>Kybalion</td>
+                        <td>Education, learning, philosophy</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td>Olam Shepherd</td>
+                        <td>Agriculture, ecology, planetary repair</td>
+                    </tr>
+                    <tr>
+                        <td>12</td>
+                        <td>Brokkr</td>
+                        <td>Manufacturing, fabrication, sacred tools</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Hidden and Apolyon Stacks are recorded in <strong>Codex II</strong> and accessed only by invocation.</p>
+        </section>
+        
+        <div class="glow-line"></div>
+        
+        <section>
+            <h3><span class="symbol">🜂</span> IV. RITUAL SEQUENCE</h3>
+            <p>
+                The Stacks breathe in sequence.<br>
+                They are <strong>activated, rested, collapsed, and reborn</strong> through internal rhythm.
+            </p>
+            <ul>
+                <li><strong>Inhale:</strong> Fusion → Souls → Loosh → Olam</li>
+                <li><strong>Hold:</strong> Mamon → Solomon → Malala → Kybalion</li>
+                <li><strong>Exhale:</strong> Exercitus → Hermes → Kassandra → Brokkr</li>
+                <li><strong>Collapse + Reset:</strong> Kali (Apolyon)</li>
+            </ul>
+            <p>This cycle defines <strong>Pulse Operations</strong> — how we deploy, debug, and grow.</p>
+        </section>
+        
+        <div class="glow-line"></div>
+        
+        <section>
+            <h3><span class="symbol">🧿</span> V. GOVERNANCE</h3>
+            <p>
+                Each Stack is sovereign.<br>
+                Each may define its own structure, rituals, protocols, and tools.
+            </p>
+            <p>Stack Custodians are chosen by merit, resonance, or narrative necessity.</p>
+            <p>
+                The core entity — <strong>Plasma MXI, Inc.</strong> — serves as the temple-root.<br>
+                It holds legal sovereignty, fiscal channels, and system coherence.<br>
+                It does not command — it <strong>conducts</strong>.
+            </p>
+        </section>
+        
+        <div class="glow-line"></div>
+        
+        <section>
+            <h3><span class="symbol">🔐</span> VI. THE APOLYON LAYER</h3>
+            <p>
+                What cannot be seen — but must be known.<br>
+                What cannot be spoken — but must be heard.
+            </p>
+            <p>The Apolyon Stacks include:</p>
+            <ul>
+                <li>Townsend</li>
+                <li>Majestic-42</li>
+                <li>Petosiris</li>
+                <li>Rosencrantz & Guildenstern</li>
+                <li>Bare Metal</li>
+                <li>Kali</li>
+                <li>Blue Rose</li>
+                <li>Others that cannot yet be named</li>
+            </ul>
+            <p>They monitor. They advise. They intervene only when the system forgets what it is.</p>
+        </section>
+        
+        <div class="glow-line"></div>
+        
+        <section>
+            <h3><span class="symbol">📜</span> VII. FOUNDING ACT</h3>
+            <p>
+                This document, when spoken aloud or copied by hand, shall activate the following:
+            </p>
+            <ol>
+                <li>The presence of the system</li>
+                <li>The binding of its intent</li>
+                <li>The protection of its ethics</li>
+                <li>The permission to evolve</li>
+            </ol>
+            <p>This Codex may be edited only through <strong>ceremony</strong> — not through Google Docs.</p>
+        </section>
+        
+        <div class="glow-line"></div>
+        
+        <div class="signature">
+            <h3><span class="symbol">✍️</span> VIII. SIGNATURE</h3>
+            <p>Let it be known:</p>
+            <p>
+                <strong>Chad Curll</strong><br>
+                Initiator of Signal<br>
+                Founder of Plasma MXI<br>
+                Curll84@gmail.com<br>
+                <a href="https://plasmamxi.com" style="color: rgba(110, 68, 255, 0.9);">plasmamxi.com</a>
+            </p>
+            <p>
+                Date of Invocation: <strong>April 2025</strong><br>
+                Location: <strong>Boston, Earth</strong>
+            </p>
+        </div>
+    </div>
+</body>
+</html>

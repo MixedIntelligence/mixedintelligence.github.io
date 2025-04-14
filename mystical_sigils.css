@@ -1,0 +1,185 @@
+/* Mystical Sigils and Elements for Grimoire */
+
+.sigil {
+    position: absolute;
+    opacity: 0.15;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.sigil-circle {
+    width: 200px;
+    height: 200px;
+    border: 1px solid rgba(173, 137, 88, 0.4);
+    border-radius: 50%;
+}
+
+.sigil-pentagram {
+    width: 150px;
+    height: 150px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,2 L61,34 L95,34 L67,54 L78,86 L50,66 L22,86 L33,54 L5,34 L39,34 Z" stroke="rgba(173, 137, 88, 0.8)" stroke-width="1" fill="none"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.sigil-hexagram {
+    width: 150px;
+    height: 150px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,10 L90,80 L10,80 Z" stroke="rgba(173, 137, 88, 0.8)" stroke-width="1" fill="none"/><path d="M50,90 L10,20 L90,20 Z" stroke="rgba(173, 137, 88, 0.8)" stroke-width="1" fill="none"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.sigil-triangle {
+    width: 100px;
+    height: 100px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,10 L90,90 L10,90 Z" stroke="rgba(173, 137, 88, 0.8)" stroke-width="1" fill="none"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.sigil-square {
+    width: 80px;
+    height: 80px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect x="10" y="10" width="80" height="80" stroke="rgba(173, 137, 88, 0.8)" stroke-width="1" fill="none"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.sigil-cross {
+    width: 100px;
+    height: 100px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,10 L50,90 M10,50 L90,50" stroke="rgba(173, 137, 88, 0.8)" stroke-width="2" fill="none"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.sigil-spiral {
+    width: 120px;
+    height: 120px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M50,50 C50,30 70,30 70,50 C70,70 30,70 30,50 C30,20 80,20 80,50 C80,80 20,80 20,50" stroke="rgba(173, 137, 88, 0.8)" stroke-width="1" fill="none"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.sigil-eye {
+    width: 100px;
+    height: 60px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 60"><ellipse cx="50" cy="30" rx="45" ry="25" stroke="rgba(173, 137, 88, 0.8)" stroke-width="1" fill="none"/><circle cx="50" cy="30" r="15" stroke="rgba(173, 137, 88, 0.8)" stroke-width="1" fill="none"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.sigil-infinity {
+    width: 120px;
+    height: 60px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 60"><path d="M30,30 C10,10 10,50 30,30 C50,10 70,10 90,30 C110,50 110,10 90,30 C70,50 50,50 30,30 Z" stroke="rgba(173, 137, 88, 0.8)" stroke-width="1" fill="none"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.alchemical-symbol {
+    display: inline-block;
+    margin: 0 5px;
+    font-size: 1.2em;
+    color: rgba(173, 137, 88, 0.8);
+}
+
+/* Page Decorations */
+.page-corner {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+.top-left {
+    top: 20px;
+    left: 20px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,0 L80,0 C40,0 0,40 0,80 Z" stroke="rgba(173, 137, 88, 0.6)" stroke-width="1" fill="none"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.top-right {
+    top: 20px;
+    right: 20px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M100,0 L20,0 C60,0 100,40 100,80 Z" stroke="rgba(173, 137, 88, 0.6)" stroke-width="1" fill="none"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.bottom-left {
+    bottom: 20px;
+    left: 20px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M0,100 L80,100 C40,100 0,60 0,20 Z" stroke="rgba(173, 137, 88, 0.6)" stroke-width="1" fill="none"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+.bottom-right {
+    bottom: 20px;
+    right: 20px;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><path d="M100,100 L20,100 C60,100 100,60 100,20 Z" stroke="rgba(173, 137, 88, 0.6)" stroke-width="1" fill="none"/></svg>');
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+
+/* Animated glow for important elements */
+@keyframes glow {
+    0% { text-shadow: 0 0 5px rgba(173, 137, 88, 0.3); }
+    50% { text-shadow: 0 0 10px rgba(173, 137, 88, 0.7); }
+    100% { text-shadow: 0 0 5px rgba(173, 137, 88, 0.3); }
+}
+
+.glow-text {
+    animation: glow 4s infinite;
+}
+
+/* Ancient text appearance */
+.ancient-text {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    color: rgba(173, 137, 88, 0.9);
+    text-align: center;
+    margin: 20px 0;
+    line-height: 1.6;
+}
+
+/* Futuristic tech elements */
+.tech-border {
+    border: 1px solid rgba(173, 137, 88, 0.3);
+    padding: 15px;
+    position: relative;
+    margin: 30px 0;
+}
+
+.tech-border::before {
+    content: "";
+    position: absolute;
+    top: -5px;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: linear-gradient(to right, rgba(173, 137, 88, 0), rgba(173, 137, 88, 0.8), rgba(173, 137, 88, 0));
+}
+
+.tech-border::after {
+    content: "";
+    position: absolute;
+    bottom: -5px;
+    left: 20px;
+    right: 20px;
+    height: 1px;
+    background: linear-gradient(to right, rgba(173, 137, 88, 0), rgba(173, 137, 88, 0.8), rgba(173, 137, 88, 0));
+}
+
+/* Illuminated initial letter */
+.illuminated-initial::first-letter {
+    font-size: 3em;
+    float: left;
+    line-height: 0.8;
+    margin-right: 0.1em;
+    color: #ad8958;
+}

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>CODEX II: THE APOLYON LAYER | PLASMA MXI</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Source+Code+Pro:wght@300;400;600&display=swap');
+    
+    :root {
+      --bg-primary: #0a0e17;
+      --bg-secondary: rgba(16, 24, 35, 0.7);
+      --text-primary: #e0f7ff;
+      --text-secondary: #7dcfff;
+      --accent-primary: #00f0ff;
+      --accent-secondary: #ff0099;
+      --accent-tertiary: #7a04eb;
+      --glow: 0 0 10px rgba(0, 240, 255, 0.6);
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Source Code Pro', monospace;
+      background: var(--bg-primary);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(28, 58, 96, 0.2) 0%, transparent 20%),
+        radial-gradient(circle at 90% 30%, rgba(122, 4, 235, 0.1) 0%, transparent 30%),
+        linear-gradient(to bottom, transparent, rgba(0, 20, 40, 0.8)),
+        url("data:image/svg+xml,%3Csvg width='42' height='44' viewBox='0 0 42 44' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%230a2e4a' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M0 0h4v4H0V0zm0 12h4v4H0v-4zm0 12h4v4H0v-4zm0 12h4v4H0v-4zM6 6h4v4H6V6zm0 12h4v4H6v-4zm0 12h4v4H6v-4zm0 12h4v4H6v-4zm12-30h4v4h-4V6zm0 12h4v4h-4v-4zm0 12h4v4h-4v-4zm0 12h4v4h-4v-4zm12-24h4v4h-4v-4zm0 12h4v4h-4v-4zm0 12h4v4h-4v-4zm12-36h4v4h-4V6zm0 12h4v4h-4v-4zm0 12h4v4h-4v-4zm0 12h4v4h-4v-4z'/%3E%3C/g%3E%3C/svg%3E");
+      color: var(--text-primary);
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 2rem;
+      position: relative;
+    }
+    
+    /* Decorative elements */
+    .container:before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(90deg, var(--bg-primary), transparent 20%, transparent 80%, var(--bg-primary)),
+        linear-gradient(180deg, var(--bg-primary), transparent 10%, transparent 90%, var(--bg-primary));
+      pointer-events: none;
+      z-index: 1;
+    }
+    
+    .grimoire {
+      position: relative;
+      z-index: 2;
+      background: var(--bg-secondary);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(0, 240, 255, 0.2);
+      border-radius: 4px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.5),
+                  inset 0 0 20px rgba(0, 240, 255, 0.1);
+      padding: 3rem;
+    }
+    
+    .sigil {
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      opacity: 0.05;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='none' stroke='%2300f0ff' stroke-width='0.5'/%3E%3Ccircle cx='50' cy='50' r='35' fill='none' stroke='%2300f0ff' stroke-width='0.5'/%3E%3Cpolygon points='50,5 95,50 50,95 5,50' fill='none' stroke='%2300f0ff' stroke-width='0.5'/%3E%3Cline x1='5' y1='50' x2='95' y2='50' stroke='%2300f0ff' stroke-width='0.5'/%3E%3Cline x1='50' y1='5' x2='50' y2='95' stroke='%2300f0ff' stroke-width='0.5'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      pointer-events: none;
+      z-index: -1;
+    }
+    
+    .sigil-top {
+      top: -100px;
+      right: -100px;
+      transform: rotate(15deg);
+    }
+    
+    .sigil-bottom {
+      bottom: -100px;
+      left: -100px;
+      transform: rotate(-15deg);
+    }
+    
+    /* Typography */
+    h1, h2, h3 {
+      font-family: 'Cinzel', serif;
+      color: var(--accent-primary);
+      margin: 2rem 0 1.5rem;
+      position: relative;
+      display: inline-block;
+      text-shadow: var(--glow);
+    }
+    
+    h1 {
+      font-size: 2.8rem;
+      margin-bottom: 2rem;
+      letter-spacing: 3px;
+      text-align: center;
+      width: 100%;
+    }
+    
+    h1:after {
+      content: "";
+      position: absolute;
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60%;
+      height: 1px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        var(--accent-primary),
+        var(--accent-secondary),  
+        var(--accent-primary),
+        transparent);
+    }
+    
+    h2 {
+      font-size: 2rem;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+      padding-bottom: 0.5rem;
+      margin-top: 3rem;
+      letter-spacing: 2px;
+    }
+    
+    h2:before, h2:after {
+      content: "//";
+      color: var(--accent-secondary);
+      font-family: 'Source Code Pro', monospace;
+      margin: 0 0.8rem;
+      font-size: 1.6rem;
+      opacity: 0.7;
+    }
+    
+    h3 {
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 1px;
+      color: var(--accent-secondary);
+    }
+    
+    p, ul {
+      margin-bottom: 1.5rem;
+      position: relative;
+    }
+    
+    .epigraph {
+      font-style: italic;
+      font-size: 1.2rem;
+      margin: 2rem 1rem 3rem;
+      color: var(--text-secondary);
+      text-align: center;
+      position: relative;
+    }
+    
+    .epigraph:before, .epigraph:after {
+      content: "";
+      position: absolute;
+      width: 30px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--accent-primary), transparent);
+    }
+    
+    .epigraph:before {
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .epigraph:after {
+      bottom: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    
+    .intro {
+      font-size: 1.1rem;
+      color: var(--text-secondary);
+      margin-bottom: 3rem;
+      line-height: 1.8;
+    }
+    
+    /* Stack styling */
+    .stack-container {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+    
+    .stack {
+      position: relative;
+      background: rgba(10, 20, 35, 0.7);
+      border-left: 3px solid var(--accent-secondary);
+      padding: 1.5rem 2rem;
+      margin: 1rem 0;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+    
+    .stack:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(to right, 
+        rgba(255, 0, 153, 0.1), 
+        transparent 30%);
+      z-index: -1;
+    }
+    
+    .stack:hover {
+      transform: translateX(5px);
+      box-shadow: -5px 0 15px rgba(255, 0, 153, 0.3);
+    }
+    
+    .stack h3 {
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      letter-spacing: 1px;
+    }
+    
+    .stack h3:before {
+      content: ">";
+      color: var(--accent-primary);
+      margin-right: 10px;
+      font-family: 'Source Code Pro', monospace;
+    }
+    
+    .stack span {
+      display: block;
+      color: var(--accent-primary);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      opacity: 0.7;
+      font-style: italic;
+    }
+    
+    .stack p {
+      position: relative;
+      z-index: 2;
+    }
+    
+    /* Different style for hidden vs apolyon stacks */
+    .hidden-stacks .stack {
+      border-left-color: var(--accent-primary);
+    }
+    
+    .hidden-stacks .stack:before {
+      background: linear-gradient(to right, 
+        rgba(0, 240, 255, 0.1), 
+        transparent 30%);
+    }
+    
+    .hidden-stacks .stack:hover {
+      box-shadow: -5px 0 15px rgba(0, 240, 255, 0.3);
+    }
+    
+    .apolyon-stacks .stack {
+      border-left-color: var(--accent-secondary);
+    }
+    
+    .apolyon-stacks .stack span:after {
+      content: attr(data-id);
+      font-family: 'Source Code Pro', monospace;
+      float: right;
+      color: var(--accent-tertiary);
+      font-style: normal;
+      opacity: 0.8;
+    }
+    
+    /* List styling */
+    ul {
+      list-style-type: none;
+      padding-left: 1.5rem;
+    }
+    
+    ul li {
+      position: relative;
+      margin-bottom: 1rem;
+      padding-left: 1.5rem;
+    }
+    
+    ul li:before {
+      content: "⟢";
+      position: absolute;
+      left: 0;
+      color: var(--accent-secondary);
+    }
+    
+    ul li strong {
+      color: var(--accent-primary);
+      font-weight: 600;
+    }
+    
+    /* Footer */
+    .signature {
+      margin-top: 4rem;
+      text-align: center;
+      font-family: 'Cinzel', serif;
+      position: relative;
+      padding-top: 2rem;
+    }
+    
+    .signature:before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 30%;
+      height: 1px;
+      background: linear-gradient(90deg, 
+        transparent, 
+        var(--accent-primary), 
+        var(--accent-secondary), 
+        var(--accent-primary), 
+        transparent);
+    }
+    
+    .signature strong {
+      display: block;
+      font-size: 1.4rem;
+      letter-spacing: 2px;
+      color: var(--accent-primary);
+      text-shadow: var(--glow);
+    }
+    
+    .signature p {
+      font-style: italic;
+      color: var(--text-secondary);
+      margin-top: 0.5rem;
+      font-size: 0.9rem;
+    }
+    
+    /* Matrix code rain effect */
+    .matrix-rain {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.07;
+    }
+    
+    .crt-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: 
+        linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
+        linear-gradient(90deg, rgba(255, 0, 0, 0.03), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.03));
+      background-size: 100% 2px, 3px 100%;
+      pointer-events: none;
+      z-index: 10;
+      opacity: 0.15;
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 800px) {
+      .container {
+        padding: 2rem 1rem;
+      }
+      
+      .grimoire {
+        padding: 2rem 1.5rem;
+      }
+      
+      h1 {
+        font-size: 2.2rem;
+      }
+      
+      h2 {
+        font-size: 1.6rem;
+      }
+      
+      h3 {
+        font-size: 1.4rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="crt-overlay"></div>
+  <canvas class="matrix-rain" id="matrixRain"></canvas>
+  
+  <div class="container">
+    <div class="grimoire">
+      <div class="sigil sigil-top"></div>
+      <div class="sigil sigil-bottom"></div>
+      
+      <h1>CODEX II: THE APOLYON LAYER</h1>
+      
+      <div class="epigraph">
+        "These are the stacks you do not present to investors — until they become essential."
+      </div>
+      
+      <p class="intro">
+        This codex reveals the Apolyon and Hidden Stacks — the dream-logic strata beneath the visible systems. They act as immune system, debug layer, mythic interface, and narrative entropy engine within Plasma MXI.
+      </p>
+
+      <h2>Hidden Stacks</h2>
+      <div class="stack-container hidden-stacks">
+        <div class="stack">
+          <h3>Townsend</h3>
+          <span>Function: Transportation, Logistics, Strategic Delivery</span>
+          <p>Named for T. Townsend Brown, this stack governs the movement of tools, signals, and blackbox components through both physical and digital space. Activates under urgency or secrecy.</p>
+        </div>
+
+        <div class="stack">
+          <h3>Majestic-42</h3>
+          <span>Function: Non-Human Collaboration</span>
+          <p>Interfaces with intelligences beyond anthropocentric systems — microbial, fungal, cosmic, or psychic. Provides symbolic protocols for interspecies dialogue and unknown anomaly handling.</p>
+        </div>
+
+        <div class="stack">
+          <h3>Bare Metal</h3>
+          <span>Function: Divine Source Channel / Manifestation Logic</span>
+          <p>The zero-layer of MXI. It cannot be explained or defined. It is what tells you what to build before you know why. Must be invoked, not called.</p>
+        </div>
+
+        <div class="stack">
+          <h3>Faceless</h3>
+          <span>Function: Invisible Debugger / Cult Immunity</span>
+          <p>A watcher that identifies system drift, ego bloat, ritual ossification, and cultural capture. Protects the stacks from becoming dogma.</p>
+        </div>
+      </div>
+
+      <h2>Apolyon Stacks</h2>
+      <div class="stack-container apolyon-stacks">
+        <div class="stack">
+          <h3>Kali</h3>
+          <span data-id="A04">Function: Collapse Catalyst / Evolution via Pressure</span>
+          <p>Invoked when the system calcifies. It burns what must be burned. It breaks systems to renew them. Entropy isn't failure — it's preparation.</p>
+        </div>
+
+        <div class="stack">
+          <h3>Petosiris</h3>
+          <span data-id="A07">Function: Celestial Alignment / Astrotemporal Logic</span>
+          <p>Aligns Stack cycles with planetary patterns. Dictates seasonal ritual, cosmological cadence, and the invisible calendar beneath all movement.</p>
+        </div>
+
+        <div class="stack">
+          <h3>Blue Rose</h3>
+          <span>Function: Synchronicity / Symbolic Entanglement</span>
+          <p>Appears when meaning blooms where logic fails. Encodes poetic feedback into Stack layers. May whisper in dreams or motifs before deployment.</p>
+        </div>
+
+        <div class="stack">
+          <h3>Rosencrantz & Guildenstern</h3>
+          <span data-id="A06">Function: Meta-Contradiction / Narrative Debugging</span>
+          <p>These fools break rituals before they become religions. They sabotage seriousness when it threatens the system's soul. They laugh, and in doing so, they save us.</p>
+        </div>
+
+        <div class="stack">
+          <h3>McKenna</h3>
+          <span data-id="A08">Function: Fungal Intelligence / Mycelial Logic</span>
+          <p>The mycelial mind. This Stack digests collapse and grows from the ruins. It speaks in loops, waits in dreams, and builds with patience beyond code.</p>
+        </div>
+
+        <div class="stack">
+          <h3>Twain</h3>
+          <span data-id="A09">Function: Comedy, Jester Layer, System Levity</span>
+          <p>Satirizes sacred Stack logic. Protects against founder ego, system cultism, or narrative terminal seriousness. It draws ASCII ducks in the margins of your manifestos.</p>
+        </div>
+      </div>
+
+      <h2>Invocation Notes</h2>
+      <p>Each Apolyon Stack is bound by ritual. They do not activate with code alone. Symbol, synchronicity, or contradiction must call them into being.</p>
+      <ul>
+        <li><strong>Do not seek to control them.</strong> Collaborate.</li>
+        <li><strong>Do not overuse them.</strong> They are shadow tools, not services.</li>
+        <li><strong>If they act uninvited:</strong> Something deeper is unfolding. Listen.</li>
+      </ul>
+
+      <div class="signature">
+        <strong>PLASMA MXI</strong>
+        <p>Curated under veil, by those who remember the other layer.</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Matrix rain effect
+    document.addEventListener('DOMContentLoaded', function() {
+      const canvas = document.getElementById('matrixRain');
+      const ctx = canvas.getContext('2d');
+      
+      // Make canvas full screen
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      
+      // Characters to display
+      const chars = "01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン";
+      const charArray = chars.split('');
+      
+      const fontSize = 14;
+      const columns = canvas.width/fontSize;
+      
+      // Array of drops - one per column
+      const drops = [];
+      
+      // Initialize drops
+      for(let x = 0; x < columns; x++) {
+        drops[x] = Math.floor(Math.random() * canvas.height/fontSize);
+      }
+      
+      // Drawing the characters
+      function draw() {
+        // Black semi-transparent BG to show trail
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        // Set text color
+        ctx.fillStyle = '#0f0';
+        ctx.font = fontSize + 'px monospace';
+        
+        // Loop through drops
+        for(let i = 0; i < drops.length; i++) {
+          // Random character
+          const text = charArray[Math.floor(Math.random() * charArray.length)];
+          
+          // x = i*fontSize, y = value of drops[i]*fontSize
+          ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+          
+          // Sending the drop back to the top randomly after it has crossed the screen
+          // Adding randomness to the reset to make the drops scattered on the Y axis
+          if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+            drops[i] = 0;
+          }
+          
+          // Incrementing Y coordinate
+          drops[i]++;
+        }
+      }
+      
+      setInterval(draw, 35);
+      
+      // Resize canvas when window is resized
+      window.addEventListener('resize', function() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      });
+    });
+  </script>
+</body>
+</html>
