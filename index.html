@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plasma MXI | Mixed Intelligence for a Living Future</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;500;700&family=Cinzel:wght@400;700&display=swap');
+        
+        :root {
+            --bg-color: #080808;
+            --text-color: #e0e0e0;
+            --accent-color: #6b46c1;
+            --accent-secondary: #38b2ac;
+            --glow-color: rgba(107, 70, 193, 0.6);
+            --highlight-color: #51d6ca;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body, html {
+            height: 100%;
+            background-color: black;
+            color: var(--text-color);
+            font-family: 'Rajdhani', sans-serif;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .slides-container {
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            transition: opacity 0.8s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+            background-color: var(--bg-color);
+            overflow: hidden;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            z-index: 2;
+        }
+        
+        /* Slide titles */
+        .slide h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            margin-bottom: 1.5rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: var(--text-color);
+            text-shadow: 0 0 10px var(--glow-color);
+            position: relative;
+            z-index: 2;
+        }
+        
+        .slide h2 {
+            font-weight: 500;
+            color: var(--accent-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.5rem;
+            text-shadow: 0 0 8px rgba(56, 178, 172, 0.6);
+            position: relative;
+            z-index: 2;
+        }
+        
+        /* Content styling */
+        .content {
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+            margin: 0 auto;
+            text-align: left;
+        }
+        
+        /* Blockquote styling */
+        blockquote {
+            font-style: italic;
+            border-left: 3px solid var(--accent-color);
+            padding-left: 20px;
+            margin: 1.5rem 0;
+            font-size: 1.3rem;
+            position: relative;
+            background: rgba(107, 70, 193, 0.1);
+            padding: 20px;
+            border-radius: 4px;
+        }
+        
+        blockquote:before, blockquote:after {
+            content: '"';
+            font-size: 3rem;
+            position: absolute;
+            opacity: 0.2;
+            color: var(--accent-color);
+        }
+        
+        blockquote:before {
+            top: -10px;
+            left: 5px;
+        }
+        
+        blockquote:after {
+            bottom: -30px;
+            right: 5px;
+        }
+        
+        /* List styling */
+        ul {
+            list-style: none;
+            margin-left: 10px;
+            margin-bottom: 1.5rem;
+        }
+        
+        ul li {
+            margin-bottom: 0.8rem;
+            position: relative;
+            padding-left: 25px;
+            font-size: 1.2rem;
+        }
+        
+        ul li:before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: var(--highlight-color);
+            font-size: 1.2rem;
+        }
+        
+        /* Highlight for important text */
+        .highlight {
+            color: var(--highlight-color);
+            font-weight: 500;
+        }
+        
+        /* Navigation arrows */
+        .nav {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 10;
+            display: flex;
+            gap: 15px;
+        }
+        
+        .nav-btn {
+            background: rgba(107, 70, 193, 0.2);
+            border: 1px solid var(--accent-color);
+            color: var(--text-color);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.5rem;
+        }
+        
+        .nav-btn:hover {
+            background: rgba(107, 70, 193, 0.5);
+            box-shadow: 0 0 15px var(--glow-color);
+        }
+        
+        /* Progress indicator */
+        .progress-container {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.1);
+            z-index: 10;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--accent-color), var(--highlight-color));
+            width: 0%;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px var(--glow-color);
+        }
+        
+        /* Geometric background patterns */
+        .geometric-pattern {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.1;
+            pointer-events: none;
+            background-image: radial-gradient(circle at 50% 50%, rgba(107, 70, 193, 0.2) 10%, transparent 60%),
+                            repeating-linear-gradient(0deg, transparent, transparent 50px, rgba(56, 178, 172, 0.1) 50px, rgba(56, 178, 172, 0.1) 51px),
+                            repeating-linear-gradient(90deg, transparent, transparent 50px, rgba(56, 178, 172, 0.1) 50px, rgba(56, 178, 172, 0.1) 51px);
+            z-index: 1;
+        }
+        
+        /* Animated spiral */
+        .spiral {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: conic-gradient(from 0deg, transparent, rgba(107, 70, 193, 0.1), transparent 50%);
+            opacity: 0.5;
+            animation: rotate 120s linear infinite;
+            z-index: 1;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Logo styling */
+        .logo-container {
+            position: relative;
+            margin-bottom: 1.5rem;
+            z-index: 2;
+        }
+        
+        .logo {
+            max-width: 200px;
+            max-height: 200px;
+            filter: drop-shadow(0 0 10px var(--glow-color));
+        }
+        
+        /* Additional light effects */
+        .light-orb {
+            position: absolute;
+            background: radial-gradient(circle, rgba(81, 214, 202, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: 1;
+            animation: pulse 8s infinite alternate;
+        }
+        
+        .light-orb:nth-child(1) {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -150px;
+            animation-delay: 0s;
+        }
+        
+        .light-orb:nth-child(2) {
+            width: 400px;
+            height: 400px;
+            bottom: -200px;
+            right: -200px;
+            background: radial-gradient(circle, rgba(107, 70, 193, 0.3) 0%, transparent 70%);
+            animation-delay: 4s;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.2; }
+            50% { opacity: 0.5; }
+            100% { opacity: 0.2; }
+        }
+        
+        /* Special effects for active slides */
+        .slide.active .light-orb {
+            animation-play-state: running;
+        }
+        
+        .slide:not(.active) .light-orb {
+            animation-play-state: paused;
+        }
+        
+        /* Slide counter */
+        .slide-counter {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            font-size: 1rem;
+            opacity: 0.6;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-container">
+        <!-- Slide 1: Cover Slide -->
+        <div class="slide active" id="slide1">
+            <div class="geometric-pattern"></div>
+            <div class="spiral"></div>
+            <div class="light-orb"></div>
+            <div class="light-orb"></div>
+            
+            <div class="logo-container">
+                <img src="PLASMA.png" alt="Plasma MXI Logo" class="logo">
+            </div>
+            <h1>PLASMA MXI</h1>
+            <h2>Mixed Intelligence for a Living Future</h2>
+            <div class="content">
+                <p>Chad Curll | <a href="https://plasmamxi.com" class="highlight">plasmamxi.com</a></p>
+            </div>
+        </div>
+        
+        <!-- Slide 2: What is Plasma MXI? -->
+        <div class="slide" id="slide2">
+            <div class="geometric-pattern"></div>
+            <div class="spiral"></div>
+            <div class="light-orb"></div>
+            <div class="light-orb"></div>
+            
+            <h1>What is Plasma MXI?</h1>
+            <div class="content">
+                <blockquote>
+                    A civilizational nervous system — integrating machine, biological, emotional, and ecological intelligence.
+                </blockquote>
+                <ul>
+                    <li>We're building the <span class="highlight">infrastructure for adaptive, intelligent systems</span></li>
+                    <li>Each domain is represented by a <span class="highlight">Stack</span>: modular, powerful, interoperable</li>
+					<li>Designed to work with existing technologies while enabling new capabilities</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Why Now? -->
+        <div class="slide" id="slide3">
+            <div class="geometric-pattern"></div>
+            <div class="spiral"></div>
+            <div class="light-orb"></div>
+            <div class="light-orb"></div>
+            
+            <h1>Why Now?</h1>
+            <div class="content">
+                <ul>
+                    <li>AI alone isn't enough — the future is <span class="highlight">Mixed Intelligence</span></li>
+                    <li>Climate volatility, system fragility, and collapse signals demand <span class="highlight">interoperable infrastructure</span></li>
+                    <li>We're in a window where <span class="highlight">foundational bets</span> become planetary leverage</li>
+					<li>Integration is more urgent than pure innovation</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Slide 4: What We're Building -->
+        <div class="slide" id="slide4">
+            <div class="geometric-pattern"></div>
+            <div class="spiral"></div>
+            <div class="light-orb"></div>
+            <div class="light-orb"></div>
+            
+            <h1>What We're Building</h1>
+            <div class="content">
+                <p> <a href="plasma-mxi-stacks-webpage.html" class="highlight">12 Stacks, each representing a key domain of civilizational function</a></p>
+                <p>MVPs already active in:</p>
+                <ul>
+                    <li><span class="highlight">⚡ Fusion</span> (LENR/Fusion/renewable optimization tools & control systems)</li>
+                    <li><span class="highlight">🤖 Souls</span> (biorobotics + control logic & embodied intelligence)</li>
+                    <li><span class="highlight">💓 Loosh</span> (emotional state AI + health)</li>
+                    <li><span class="highlight">🛡 Exercitus Caelestis</span> (ethical defense systems)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Progress & Infrastructure -->
+        <div class="slide" id="slide5">
+            <div class="geometric-pattern"></div>
+            <div class="spiral"></div>
+            <div class="light-orb"></div>
+            <div class="light-orb"></div>
+            
+            <h1>Progress & Infrastructure</h1>
+            <div class="content">
+                <ul>
+                    <li>Core repositories: <a href="https://github.com/MixedIntelligence" class="highlight">github.com/MixedIntelligence</a></li>
+                    <li>Plasma Codex v1.0 completed (system architecture docs)</li>
+                    <li>Loosh + Souls prototypes operational</li>
+                    <li>Fusion control systems under development</li>
+					<li>Strategic partnerships forming in defense, energy & biotech sectors</li>
+					<li>xiLeadership IaaS Agents being built - <a href="leadership.html" class="highlight">Meet The Digital Team</a></li>
+                </ul>
+            </div>
+        </div>
+		
+        
+        <!-- Slide 6: The Ask -->
+        <div class="slide" id="slide6">
+            <div class="geometric-pattern"></div>
+            <div class="spiral"></div>
+            <div class="light-orb"></div>
+            <div class="light-orb"></div>
+			<h1>Market Opportunity</h1>
+            <div class="content">
+                <ul>
+                    <li>Total addressable market: <span class="highlight">$2.7T by 2032</span> across all Stacks</li>
+                    <li>Initial focus markets:
+                        <ul>
+                            <li>Clean energy control systems: $127B</li>
+                            <li>Intelligent robotics: $78B</li>
+                            <li>Emotional intelligence systems: $56B</li>
+                        </ul>
+                    </li>
+                    <li>Multiple paths to commercialization: licensing, spinouts, strategic partnerships</li>
+                </ul>
+            </div>
+            
+            <h1>The Ask</h1>
+            <div class="content">
+                <blockquote>
+                    We are seeking early capital to complete MVPs, scale the core team, and prepare Stack spinouts.
+                </blockquote>
+                <p><span class="highlight">$750k — $1.5M pre-seed</span></p>
+                <p>Use of funds:</p>
+                <ul>
+                    <li>Finalize Fusion MVP + testbed</li>
+                    <li>Build Souls hardware prototype</li>
+                    <li>Fund Loosh + Kassandra integrations</li>
+                    <li>Team (roboticist, ML engineer, embedded dev, ops lead)</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Slide 7: The Founder -->
+        <div class="slide" id="slide7">
+            <div class="geometric-pattern"></div>
+            <div class="spiral"></div>
+            <div class="light-orb"></div>
+            <div class="light-orb"></div>
+            
+            <h1>The Founder</h1>
+            <div class="content">
+                <h2>Chad Curll</h2>
+                <ul>
+                    <li>Systems thinker, visionary, ritual engineer</li>
+                    <li>3x Founder (Shado Sports, Mahj, Landrace) in emerging markets/tech</li>
+					<li>Lead marketing for Dogecoin Foundation in 2013 | Tech in Motion Best Tech Startup 2014 Nominee (Shado Sports) | Launched first-ever legal cannabis IoT device to market 2017
+                    <li>Builder of companies with symbolic and strategic depth</li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Slide 8: The Vision -->
+        <div class="slide" id="slide8">
+            <div class="geometric-pattern"></div>
+            <div class="spiral"></div>
+            <div class="light-orb"></div>
+            <div class="light-orb"></div>
+            
+            <h1>The Vision</h1>
+            <div class="content">
+                <blockquote>
+                    We don't optimize. We integrate.<br>
+                    We don't just build apps. We build the nervous system for post-fragile civilization.
+                </blockquote>
+                <ul>
+                    <li>Mixed Intelligence is the substrate of the next era</li>
+                    <li>You're not just funding a startup — you're helping <span class="highlight">compose the world to come</span></li>
+					<li>Plasma MXI: <span class="highlight">intelligent infrastructure for humanity's future</span></li>
+                </ul>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Contact & Closing -->
+        <div class="slide" id="slide9">
+            <div class="geometric-pattern"></div>
+            <div class="spiral"></div>
+            <div class="light-orb"></div>
+            <div class="light-orb"></div>
+            
+            <h1>Contact & Closing</h1>
+            <div class="content">
+                <ul>
+                    <li>Chad Curll</li>
+                    <li><a href="https://plasmamxi.com" class="highlight">plasmamxi.com</a></li>
+                    <li>PlasmaMixed@gmail.com</li>
+                    <li><a href="https://github.com/MixedIntelligence" class="highlight">github.com/MixedIntelligence</a></li>
+					<li><a href="plasma_grimoire.html" class="highlight">Plasma Codex I (lore document)</a></li>
+                </ul>
+                <p class="highlight">Let's build it together.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigation buttons -->
+    <div class="nav">
+        <button class="nav-btn" id="prev-btn">&#8592;</button>
+        <button class="nav-btn" id="next-btn">&#8594;</button>
+    </div>
+    
+    <!-- Progress bar -->
+    <div class="progress-container">
+        <div class="progress-bar" id="progress-bar"></div>
+    </div>
+    
+    <!-- Slide counter -->
+    <div class="slide-counter" id="slide-counter">1 / 9</div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const progressBar = document.getElementById('progress-bar');
+            const slideCounter = document.getElementById('slide-counter');
+            let currentSlide = 0;
+            
+            // Update progress bar
+            function updateProgress() {
+                const progress = ((currentSlide) / (slides.length - 1)) * 100;
+                progressBar.style.width = `${progress}%`;
+                slideCounter.textContent = `${currentSlide + 1} / ${slides.length}`;
+            }
+            
+            // Show slide
+            function showSlide(n) {
+                slides.forEach(slide => slide.classList.remove('active'));
+                currentSlide = (n + slides.length) % slides.length;
+                slides[currentSlide].classList.add('active');
+                updateProgress();
+            }
+            
+            // Next/previous controls
+            function nextSlide() {
+                showSlide(currentSlide + 1);
+            }
+            
+            function prevSlide() {
+                showSlide(currentSlide - 1);
+            }
+            
+            // Event listeners
+            prevBtn.addEventListener('click', prevSlide);
+            nextBtn.addEventListener('click', nextSlide);
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'ArrowRight' || e.key === ' ') {
+                    nextSlide();
+                } else if (e.key === 'ArrowLeft') {
+                    prevSlide();
+                }
+            });
+            
+            // Initialize progress bar
+            updateProgress();
+            
+            // Fullscreen toggle with 'F' key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'f' || e.key === 'F') {
+                    if (!document.fullscreenElement) {
+                        document.documentElement.requestFullscreen().catch(err => {
+                            console.log(`Error attempting to enable fullscreen: ${err.message}`);
+                        });
+                    } else {
+                        if (document.exitFullscreen) {
+                            document.exitFullscreen();
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
