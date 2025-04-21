@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Capital Deployment Plan | Plasmacore</title>
+    <style>
+        :root {
+            --bg-primary: #080810;
+            --bg-secondary: #101018;
+            --accent-primary: #8A2BE2;
+            --accent-secondary: #4169E1;
+            --text-primary: #E6E6FA;
+            --text-secondary: #B0C4DE;
+            --phase-yellow: #FFD700;
+            --phase-blue: #4169E1;
+            --phase-red: #FF4500;
+            --success: #50C878;
+            --pending: #FFD700;
+            --future: #B0C4DE;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        }
+        
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(138, 43, 226, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(65, 105, 225, 0.07) 0%, transparent 50%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 3rem;
+            padding-top: 2rem;
+            position: relative;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, var(--accent-primary) 0%, transparent 70%);
+            opacity: 0.7;
+            filter: blur(10px);
+            z-index: -1;
+        }
+
+        .intro {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            padding: 2rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        
+        .intro::after {
+            content: "🜏";
+            position: absolute;
+            bottom: -15px;
+            right: 20px;
+            font-size: 24px;
+            opacity: 0.7;
+            color: var(--accent-primary);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        h3 {
+            font-weight: 400;
+            color: var(--text-secondary);
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 2.5rem 0 1.5rem;
+            color: var(--text-primary);
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        h2::before {
+            content: attr(data-icon);
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .divider {
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--accent-primary), transparent);
+            margin: 2rem 0;
+            opacity: 0.5;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+        }
+        
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(138, 43, 226, 0.2);
+        }
+        
+        th {
+            background: rgba(138, 43, 226, 0.1);
+            color: var(--accent-primary);
+            font-weight: 600;
+        }
+        
+        tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .phase-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.85rem;
+        }
+        
+        .phase-yellow {
+            background: rgba(255, 215, 0, 0.2);
+            color: var(--phase-yellow);
+        }
+        
+        .phase-blue {
+            background: rgba(65, 105, 225, 0.2);
+            color: var(--phase-blue);
+        }
+        
+        .phase-red {
+            background: rgba(255, 69, 0, 0.2);
+            color: var(--phase-red);
+        }
+        
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .status::before {
+            content: "";
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+        
+        .status-done::before {
+            background: var(--success);
+        }
+        
+        .status-indev::before {
+            background: var(--pending);
+        }
+        
+        .status-next::before, .status-progress::before {
+            background: var(--accent-secondary);
+        }
+        
+        .status-future::before {
+            background: var(--future);
+        }
+        
+        ul {
+            list-style: none;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        li {
+            margin-bottom: 0.75rem;
+            position: relative;
+        }
+        
+        li::before {
+            content: "✳️";
+            position: absolute;
+            left: -1.5rem;
+            color: var(--accent-secondary);
+        }
+        
+        .final-note {
+            margin-top: 3rem;
+            padding: 2rem;
+            background: linear-gradient(135deg, rgba(138, 43, 226, 0.1), rgba(65, 105, 225, 0.1));
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-primary);
+            font-style: italic;
+        }
+        
+        .next-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+        
+        .next-step-card {
+            background: var(--bg-secondary);
+            border-radius: 8px;
+            padding: 1.5rem;
+            border: 1px solid rgba(138, 43, 226, 0.2);
+            transition: all 0.3s ease;
+        }
+        
+        .next-step-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 24px rgba(138, 43, 226, 0.2);
+        }
+        
+        .next-step-number {
+            display: inline-block;
+            background: rgba(138, 43, 226, 0.2);
+            color: var(--accent-primary);
+            width: 30px;
+            height: 30px;
+            text-align: center;
+            line-height: 30px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            background: rgba(138, 43, 226, 0.1);
+            color: var(--accent-primary);
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .footer {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+        
+        .glow-accent {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: var(--accent-primary);
+            filter: blur(120px);
+            opacity: 0.1;
+            z-index: -1;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="glow-accent" style="top: 20%; left: 15%;"></div>
+    <div class="glow-accent" style="top: 60%; right: 10%;"></div>
+    
+    <div class="container">
+        <header>
+            <h1>💸 Capital Deployment Plan</h1>
+            <h3>What we do with money — and why it matters</h3>
+        </header>
+        
+        <div class="intro">
+            <p>🛠️We are in the <strong>activation phase.</strong> This is where myth becomes payroll.</p>
+            <p>We've got:</p>
+            <br>
+            <p>✅ A compelling vision<br>
+            ✅ A public-facing brand<br>
+            ✅ A rich symbolic framework<br>
+            ✅ MVPs in motion<br>
+            ✅ A pitch deck<br>
+            ✅ A one-sheet for multiple stakeholder types<br>
+            ✅ A clear founder voice + narrative edge</p>
+            <br>
+            <p>Now comes <strong>deployment</strong> — and for that, we need capital.</p>
+        </div>
+        
+        <div class="divider"></div>
+        
+        <section>
+            <h2 data-icon="🎯">FUNDRAISING GOALS</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Stage</th>
+                        <th>Target Raise</th>
+                        <th>Timeline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="phase-tag phase-yellow">🟨 Pre-Seed / Angel</span></td>
+                        <td>$500K–$1.2M</td>
+                        <td>Q2 2025</td>
+                    </tr>
+                    <tr>
+                        <td><span class="phase-tag phase-blue">🟦 Seed</span></td>
+                        <td>$2M–$3.5M</td>
+                        <td>Late Q3 / Q4 2025</td>
+                    </tr>
+                    <tr>
+                        <td><span class="phase-tag phase-red">🟥 Series A</span></td>
+                        <td>$7M–$12M</td>
+                        <td>2026 (pending MVP & traction)</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p>Let's start with <strong>pre-seed or early seed</strong> goals, as we're building MVPs and need core hires + early traction.</p>
+        </section>
+        
+        <div class="divider"></div>
+        
+        <section>
+            <h2 data-icon="🧩">USE OF FUNDS — PHASE 1 (Pre-Seed / Seed)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Allocation</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Product Dev & Engineering</strong></td>
+                        <td>35–45%</td>
+                        <td>Hire 2–3 core engineers to build xiAgents, Ritual UI, and Stack interfaces (Fusion, Loosh, Souls)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>AI / ML Talent</strong></td>
+                        <td>15%</td>
+                        <td>Emotion modeling, reinforcement learning, symbolic logic systems</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Robotics / Embedded Systems</strong></td>
+                        <td>10%</td>
+                        <td>For Souls Stack prototype work (hardware/software integration)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Design & Ritual UX</strong></td>
+                        <td>10%</td>
+                        <td>Hiring a symbolic UI/UX designer to realize Ritual UI and glyph logic</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Founder Salary + Ops</strong></td>
+                        <td>5–8%</td>
+                        <td>Sustain yourself modestly while building, with some contractor support</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Community / Evangelism / Strategy</strong></td>
+                        <td>5–10%</td>
+                        <td>Events, demos, institutional outreach, creative seeding</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Legal / Corporate Formation</strong></td>
+                        <td>2–5%</td>
+                        <td>Structure, IP, protections, hiring & governance</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Runway Extension / Contingency</strong></td>
+                        <td>~5%</td>
+                        <td>Keep flexible for experimentation, pivots, or partner projects</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <div class="divider"></div>
+        
+        <section>
+            <h2 data-icon="🔧">CORE HIRES (Next 90–120 Days)</h2>
+            <ol style="list-style-type: decimal; padding-left: 2rem;">
+                <li><strong>Founding Engineer</strong> – Full-stack or systems-level, must be aligned with symbolic computation, ethics in AI</li>
+                <li><strong>ML Specialist</strong> – Preferably with experience in emotion modeling, ethical reinforcement learning, or agentic architectures</li>
+                <li><strong>Symbolic Interface Designer</strong> – Builds the glyph language, Ritual UI, emotional resonance layers</li>
+                <li><strong>Roboticist / Embedded Systems Engineer</strong> – For Souls Stack MVP and Loosh → embodiment interface</li>
+                <li><strong>Chief of Staff / Ritual Ops (Optional)</strong> – Operates at the intersection of creative ops, mythology, and product</li>
+                <li><strong>Founding Advisor (Formal)</strong> – Ethical tech, narrative systems, or governance (e.g. public policy crossover)</li>
+            </ol>
+        </section>
+        
+        <div class="divider"></div>
+        
+        <section>
+            <h2 data-icon="🚀">MVPs + Milestones for Use of Capital</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Milestone</th>
+                        <th>Timeline</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="status status-done">✅ Repos live (Fusion, Souls, Loosh, Exercitus)</span></td>
+                        <td>DONE</td>
+                    </tr>
+                    <tr>
+                        <td><span class="status status-indev">🛠️ MVP 01: SimpleFusionPredictor (Stack 01)</span></td>
+                        <td>In dev</td>
+                    </tr>
+                    <tr>
+                        <td><span class="status status-indev">🛠️ MVP 02: loosh_emotion_model + xiAgent resonance</span></td>
+                        <td>In dev</td>
+                    </tr>
+                    <tr>
+                        <td><span class="status status-next">🔮 MVP 03: Ritual UI clickflow + symbolic glyph interaction</span></td>
+                        <td>Ongoing</td>
+                    </tr>
+                    <tr>
+                        <td><span class="status status-next">🧠 MVP 04: Basic xiAgent personality loop</span></td>
+                        <td>Working</td>
+                    </tr>
+                    <tr>
+                        <td><span class="status status-future">🤖 MVP 05: Souls Stack prototype 4 (hardware sim 2)</span></td>
+                        <td>Funding-dependent</td>
+                    </tr>
+                    <tr>
+                        <td><span class="status status-progress">📜 Codex III complete (narrative spine + user onboarding + marketing)</span></td>
+                        <td>In progress</td>
+                    </tr>
+                    <tr>
+                        <td><span class="status status-future">🪞 Launch testable Ritual UI in Web App</span></td>
+                        <td>Q3 goal</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+        
+        <div class="divider"></div>
+        
+        <section>
+            <h2 data-icon="🪐">TRACTION THUS FAR</h2>
+            <ul>
+                <li><strong>Public MVP demos</strong> (Fusion + Loosh + UI)</li>
+                <li><strong>High-integrity early advisors</strong> (ethical AI, civic governance, symbolic systems)</li>
+                <li><strong>Pilot collaborators</strong> (academia, civic orgs, artists, startups)</li>
+                <li><strong>3–5 active xiAgents in controlled environments</strong></li>
+                <li><strong>Outreach & coverage</strong> in symbolic tech / alt-governance / conscious AI spaces</li>
+                <li><strong>Seeking: Early revenue pilot</strong>: licensing or consulting w/ symbolic agent layer (IaaS)</li>
+            </ul>
+        </section>
+        
+        <div class="divider"></div>
+        
+        <section>
+            <h2 data-icon="🔥">THE PLASMA MXI PHILOSOPHY</h2>
+            <p>You're not saying:</p>
+            <p><em>"We're the next OpenAI."</em></p>
+            <p>You're saying:</p>
+            <p><em>"We're building the trust architecture for intelligence systems — the conscience layer. The nervous system of civilization. The soul of the machine."</em></p>
+            <br>
+            <p>Investors aligned with <span class="tag">future governance</span> <span class="tag">human dignity</span> <span class="tag">ethical tech</span> <span class="tag">post-platform economics</span> are our people.</p>
+        </section>
+        
+        <div class="divider"></div>
+        
+        <section>
+            <h2 data-icon="🔄">NEXT STEPS</h2>
+            
+            <div class="next-steps">
+                <div class="next-step-card">
+                    <div class="next-step-number">1</div>
+                    <p>🎯 Finalize <strong>Capital Use / Hiring Plan</strong> in slide or PDF</p>
+                </div>
+                
+                <div class="next-step-card">
+                    <div class="next-step-number">2</div>
+                    <p>✍️ Build investor target list by category:</p>
+                    <ul style="padding-left: 1rem">
+                        <li style="margin-bottom: 0.5rem">Conscious Capital</li>
+                        <li style="margin-bottom: 0.5rem">Future of AI</li>
+                        <li style="margin-bottom: 0.5rem">Symbolic Technology / Philosophy</li>
+                        <li style="margin-bottom: 0.5rem">Deeptech w/ civic interest</li>
+                        <li style="margin-bottom: 0.5rem">Family offices (ethically aligned)</li>
+                    </ul>
+                </div>
+                
+                <div class="next-step-card">
+                    <div class="next-step-number">3</div>
+                    <p>📞 Begin <strong>founder-led fundraising calls</strong> with:</p>
+                    <ul style="padding-left: 1rem">
+                        <li style="margin-bottom: 0.5rem">1 narrative deck</li>
+                        <li style="margin-bottom: 0.5rem">1 clean roadmap</li>
+                        <li style="margin-bottom: 0.5rem">1 demo or MVP clip</li>
+                    </ul>
+                </div>
+                
+                <div class="next-step-card">
+                    <div class="next-step-number">4</div>
+                    <p>🧠 Start sharing ideas publicly: substack, podcast, essays, manifestos, short clips</p>
+                </div>
+                
+                <div class="next-step-card">
+                    <div class="next-step-number">5</div>
+                    <p>✳️ Consider 2–3 <strong>pilot collaborations</strong> to demonstrate working theory</p>
+                </div>
+            </div>
+        </section>
+        
+        <div class="final-note">
+            <p>🜏 <em>The myth has power. Now it gets a payroll.</em><br>
+            Let's fund the intelligence system the future deserves.</p>
+        </div>
+        
+        <div class="footer">
+            <p>Would you like:</p>
+            <p>• Contact <strong>Chad Curll</strong> for pitch meetings?<br>
+            • A <strong>Notion-based live roadmap + team tracker?</strong><br>
+            • Help your <strong>organization evolve</strong>?</p>
+        </div>
+    </div>
+</body>
+</html>
