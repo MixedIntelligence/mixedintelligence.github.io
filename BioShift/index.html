@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BioShift - Fighting for Laid-off Lab Workers</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: radial-gradient(ellipse at center, #0a0f1c 0%, #000408 70%);
+            color: #e8eaed;
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Bio-organic background pattern */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0.03;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(64, 224, 208, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 165, 0, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(138, 43, 226, 0.2) 0%, transparent 50%);
+            animation: organicPulse 8s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes organicPulse {
+            0% { transform: scale(1) rotate(0deg); opacity: 0.03; }
+            100% { transform: scale(1.1) rotate(2deg); opacity: 0.05; }
+        }
+
+        .slide-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1200px;
+            height: 80vh;
+            padding: 60px;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.02) 0%, 
+                rgba(255, 255, 255, 0.005) 50%, 
+                rgba(0, 0, 0, 0.1) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            box-shadow: 
+                0 20px 40px rgba(0, 0, 0, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            animation: slideIn 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        /* Portal-inspired accent lines */
+        .slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                #40e0d0 20%, 
+                #ffa500 50%, 
+                #8a2be2 80%, 
+                transparent 100%);
+            animation: portalGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes portalGlow {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .slide h1 {
+            font-size: 3.5rem;
+            font-weight: 300;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #40e0d0, #ffa500, #8a2be2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+        }
+
+        .slide h2 {
+            font-size: 2.2rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            color: #b8bcc8;
+            letter-spacing: -0.01em;
+        }
+
+        .slide h3 {
+            font-size: 1.6rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            color: #40e0d0;
+        }
+
+        .slide p, .slide li {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+            color: #d1d5db;
+        }
+
+        .slide ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .slide li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .slide li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(45deg, #40e0d0, #8a2be2);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(64, 224, 208, 0.5);
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            color: #e8eaed;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .nav-btn:hover {
+            background: rgba(64, 224, 208, 0.1);
+            border-color: #40e0d0;
+            box-shadow: 0 0 20px rgba(64, 224, 208, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            color: #40e0d0;
+            font-weight: 500;
+        }
+
+        .logo {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, #40e0d0, #8a2be2);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: white;
+            box-shadow: 0 10px 30px rgba(64, 224, 208, 0.3);
+        }
+
+        .tagline {
+            font-size: 1.4rem;
+            color: #ffa500;
+            font-weight: 300;
+            margin-bottom: 3rem;
+            opacity: 0.9;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, 
+                rgba(64, 224, 208, 0.05) 0%, 
+                rgba(138, 43, 226, 0.05) 100%);
+            border: 1px solid rgba(64, 224, 208, 0.2);
+            border-radius: 16px;
+            padding: 2rem;
+            margin: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .highlight-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 255, 255, 0.1), 
+                transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .value-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .value-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .value-card:hover {
+            transform: translateY(-5px);
+            border-color: #40e0d0;
+            box-shadow: 0 10px 30px rgba(64, 224, 208, 0.1);
+        }
+
+        .bio-pattern {
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 200px;
+            height: 200px;
+            opacity: 0.1;
+            background: radial-gradient(circle, #40e0d0 1px, transparent 1px);
+            background-size: 20px 20px;
+            animation: bioFloat 6s ease-in-out infinite;
+        }
+
+        @keyframes bioFloat {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, 
+                rgba(64, 224, 208, 0.1) 0%, 
+                rgba(255, 165, 0, 0.1) 50%, 
+                rgba(138, 43, 226, 0.1) 100%);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+            border: 1px solid rgba(64, 224, 208, 0.3);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #40e0d0, #8a2be2);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-weight: 600;
+            margin: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(64, 224, 208, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(64, 224, 208, 0.4);
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">BS</div>
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">14</span>
+    </div>
+
+    <div class="slide-container">
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active">
+            <div class="bio-pattern"></div>
+            <h1>BioShift</h1>
+            <p class="tagline">Connecting Labs with Specialized Scientific Expertise, On Demand</p>
+            <div class="highlight-box">
+                <h3>Agile Scientific Talent for a Changing R&D Landscape</h3>
+                <p>Revolutionizing how scientific research gets done through flexible, on-demand expertise matching.</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Shifting Tides -->
+        <div class="slide">
+            <h2>The Shifting Tides in Scientific R&D</h2>
+            <h3>The Old Ways of R&D Staffing Are No Longer Enough</h3>
+            <ul>
+                <li><strong>Industry Contraction & Layoffs:</strong> Skilled scientists are available, seeking new avenues</li>
+                <li><strong>Federal Funding Volatility:</strong> Labs face uncertain budgets, need cost-effective solutions</li>
+                <li><strong>Brain Drain Concerns:</strong> Risk of losing valuable talent from the R&D ecosystem</li>
+                <li><strong>Project-Based Needs:</strong> Labs require specialized skills for specific durations, not always full-time roles</li>
+                <li><strong>The Mandate:</strong> Science must continue—discoveries can't wait for perfect hiring conditions</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Core Problem -->
+        <div class="slide">
+            <h2>The Core Problem for Labs & Scientists</h2>
+            <h3>A Disconnect Between Scientific Need and Available Talent</h3>
+            
+            <div class="value-grid">
+                <div class="value-card">
+                    <h3>For Labs (The Customer)</h3>
+                    <ul>
+                        <li>"We need specific expertise for a 6-month project, but can't commit to full-time hire"</li>
+                        <li>"Our core team is stretched thin; we need to augment capacity"</li>
+                        <li>"Traditional hiring is too slow; we'll miss our research window"</li>
+                        <li>"How do we tap into recently laid-off experts?"</li>
+                    </ul>
+                </div>
+                <div class="value-card">
+                    <h3>For Scientists</h3>
+                    <ul>
+                        <li>"I have valuable skills but was affected by recent layoffs"</li>
+                        <li>"I'm seeking flexible project work utilizing my expertise"</li>
+                        <li>"How can I find impactful short-term roles without endless job board searches?"</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: Solution -->
+        <div class="slide">
+            <h2>Our Solution - BioShift Gigs Marketplace</h2>
+            <h3>Your Direct Connection to On-Demand Scientific Expertise</h3>
+            
+            <div class="highlight-box">
+                <p><strong>What it is:</strong> A curated online marketplace specifically for project-based scientific "gigs"</p>
+                <div style="text-align: center; margin: 2rem 0; font-size: 1.5rem; color: #40e0d0;">
+                    Lab posts a gig → Vetted Scientists apply → Connect & Collaborate
+                </div>
+                <p><strong>Focus:</strong> Directly addressing the immediate pain points of labs needing to get science done and scientists seeking flexible, skilled work</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Value Prop - Labs -->
+        <div class="slide">
+            <h2>Value Proposition - For Labs</h2>
+            <h3>Get Your Science Done: Faster, Smarter, More Cost-Effectively</h3>
+            
+            <ul>
+                <li><strong>Agility & Speed:</strong> Find and onboard specialists in days, not months. Adapt to project timelines</li>
+                <li><strong>Cost-Effectiveness:</strong> Convert fixed labor costs to variable project expenses. Access top talent without long-term overhead</li>
+                <li><strong>Access to Specialized Talent:</strong> Tap into pre-vetted PhDs, postdocs, and technicians with niche skills (CRISPR, bioinformatics, assay development)</li>
+                <li><strong>Maintain Momentum:</strong> Keep research projects on track despite budget constraints or hiring freezes</li>
+                <li><strong>Stop Brain Drain:</strong> Provide a platform for skilled scientists to remain engaged in the R&D sector</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6: Value Prop - Scientists -->
+        <div class="slide">
+            <h2>Value Proposition - For Scientists</h2>
+            <h3>Meaningful Work, On Your Terms</h3>
+            
+            <ul>
+                <li><strong>Diverse & Impactful Projects:</strong> Engage in cutting-edge research across various organizations</li>
+                <li><strong>Flexibility & Autonomy:</strong> Choose gigs that match your skills, interests, and availability</li>
+                <li><strong>Skill Utilization & Growth:</strong> Apply your expertise and gain new experiences</li>
+                <li><strong>Bridge Employment Gaps:</strong> A vital resource for those affected by layoffs or seeking non-traditional career paths</li>
+                <li><strong>Networking:</strong> Connect with different labs and researchers</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Platform Features -->
+        <div class="slide">
+            <h2>The BioShift Platform</h2>
+            <h3>Simple, Efficient, and Tailored for Science</h3>
+            
+            <div class="value-grid">
+                <div class="value-card">
+                    <h3>For Labs</h3>
+                    <ul>
+                        <li>Easy gig posting</li>
+                        <li>Clear skill definition</li>
+                        <li>Applicant tracking</li>
+                        <li>Communication tools</li>
+                    </ul>
+                </div>
+                <div class="value-card">
+                    <h3>For Scientists</h3>
+                    <ul>
+                        <li>Profile creation highlighting expertise</li>
+                        <li>Targeted gig recommendations</li>
+                        <li>Simple application process</li>
+                        <li>Portfolio showcasing</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="highlight-box">
+                <p><strong>Underlying Foundation:</strong> Rigorous vetting process for scientists, secure communication, and quality assurance</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Market Opportunity -->
+        <div class="slide">
+            <h2>Market Opportunity</h2>
+            <h3>The Demand is Real</h3>
+            
+            <div class="highlight-box">
+                <h3>Market Conditions</h3>
+                <ul>
+                    <li>Widespread layoffs across biotech/pharma sectors</li>
+                    <li>Funding shifts requiring operational flexibility</li>
+                    <li>Ongoing critical need for R&D advancement</li>
+                </ul>
+            </div>
+            
+            <ul>
+                <li><strong>Market Size:</strong> Thousands of biotech/pharma companies and research institutions</li>
+                <li><strong>Available Talent:</strong> Scientists seeking flexible work or affected by job market changes</li>
+                <li><strong>Cost of Inaction:</strong> Delayed projects and unfilled specialist roles cost labs millions</li>
+                <li><strong>Perfect Timing:</strong> Convergence of market needs and rise of specialized gig economies</li>
+            </ul>
+        </div>
+
+        <!-- Slide 9: Business Model -->
+        <div class="slide">
+            <h2>Business Model</h2>
+            <h3>Clear & Value-Driven</h3>
+            
+            <div class="highlight-box">
+                <h3>Primary Revenue Stream</h3>
+                <p><strong>Commission fee on successfully completed gigs (paid by the lab/hirer)</strong></p>
+                <ul>
+                    <li>Transparent percentage (15-20% of gig value)</li>
+                    <li>Aligns BioShift's success with customer success</li>
+                    <li>No upfront costs for either party</li>
+                </ul>
+            </div>
+            
+            <h3>Future Premium Services (for Labs)</h3>
+            <ul>
+                <li>Enhanced gig visibility and priority placement</li>
+                <li>Advanced talent search and matching algorithms</li>
+                <li>Dedicated account management and support</li>
+            </ul>
+        </div>
+
+        <!-- Slide 10: Traction & Go-to-Market -->
+        <div class="slide">
+            <h2>Traction & Go-to-Market</h2>
+            <h3>Building Our Community of Labs and Scientists</h3>
+            
+            <div class="value-grid">
+                <div class="value-card">
+                    <h3>Go-to-Market Strategy</h3>
+                    <ul>
+                        <li>Targeted outreach to university tech transfer offices</li>
+                        <li>Partnerships with biotech incubators and industry associations</li>
+                        <li>Digital marketing on LinkedIn and research communities</li>
+                        <li>Content marketing on agile R&D staffing</li>
+                    </ul>
+                </div>
+                <div class="value-card">
+                    <h3>Key Milestones (Next 6-12 months)</h3>
+                    <ul>
+                        <li>1,000+ scientist profiles</li>
+                        <li>100+ lab partnerships</li>
+                        <li>50+ successful gig matches</li>
+                        <li>Platform feature expansion</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: Team -->
+        <div class="slide">
+            <h2>Team</h2>
+            <h3>We Understand the Challenges of Modern R&D</h3>
+            
+            <div class="highlight-box">
+                <p>Our founding team combines deep scientific expertise with proven experience in building scalable platforms and understanding the unique needs of the research community.</p>
+                
+                <ul>
+                    <li><strong>Scientific Background:</strong> PhD-level understanding of research workflows and pain points</li>
+                    <li><strong>Platform Experience:</strong> Proven track record in building and scaling online marketplaces</li>
+                    <li><strong>Industry Network:</strong> Strong connections across biotech, pharma, and academic research</li>
+                    <li><strong>Advisory Board:</strong> Seasoned professionals from scientific and talent acquisition sectors</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Slide 12: The Ask -->
+        <div class="slide">
+            <h2>Partner With Us</h2>
+            <h3>To Reshape Scientific Staffing</h3>
+            
+            <div class="highlight-box">
+                <h3>Use of Funds</h3>
+                <ul>
+                    <li><strong>Platform Development & Scaling:</strong> Enhanced matching algorithms and user experience</li>
+                    <li><strong>Aggressive Marketing & Sales:</strong> Build network liquidity (labs & scientists)</li>
+                    <li><strong>Customer Support Infrastructure:</strong> Ensure quality matches and user satisfaction</li>
+                    <li><strong>Strategic Partnerships:</strong> Expand reach through industry collaborations</li>
+                </ul>
+            </div>
+            
+            <div class="cta-section">
+                <h3>Impact of Funding</h3>
+                <p>Achieve critical mass, demonstrate market fit, become the go-to platform for scientific talent matching</p>
+            </div>
+        </div>
+
+        <!-- Slide 13: Vision & CTA -->
+        <div class="slide">
+            <h2>BioShift Vision</h2>
+            <h3>Powering the Future of Scientific Discovery, One Gig at a Time</h3>
+            
+            <div class="cta-section">
+                <p>BioShift solves the immediate, pressing needs of labs and scientists in the current environment, ensuring that scientific progress continues uninterrupted.</p>
+                
+                <div style="margin: 2rem 0;">
+                    <a href="#" class="cta-button">For Labs: Post Your Project Today</a>
+                    <a href="#" class="cta-button">For Scientists: Join Our Network</a>
+                    <a href="#" class="cta-button">For Investors: Support Scientific Progress</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 14: Contact -->
+        <div class="slide">
+            <div style="text-align: center; padding-top: 5rem;">
+                <h1>BioShift</h1>
+                <p class="tagline">Connecting Labs with Specialized Scientific Expertise, On Demand</p>
+                
+                <div class="highlight-box" style="margin-top: 4rem;">
+                    <h3>Contact Information</h3>
+                    <p style="font-size: 1.5rem; margin: 1rem 0;">
+                        <strong>Website:</strong> www.bioshift.xyz<br>
+                        <strong>Email:</strong> curll84@gmail.com<br>
+                        <strong>LinkedIn:</strong> /company/bioshiftgigs<br>
+                        <strong>Screenshots: https://mixedintelligence.github.io/BioShift/docs/screens/</strong>
+                    </p>
+                </div>
+                
+                <div class="cta-section">
+                    <p style="font-size: 1.3rem;">Ready to transform how science gets done?</p>
+                    <a href="#" class="cta-button">Let's Connect</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="previousSlide()">← Previous</button>
+        <button class="nav-btn" onclick="nextSlide()">Next →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+        }
+
+        function nextSlide() {
+            showSlide(currentSlide + 1);
+        }
+
+        function previousSlide() {
+            showSlide(currentSlide - 1);
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Auto-advance slides (optional - uncomment to enable)
+        // setInterval(nextSlide, 10000); // Advance every 10 seconds
+    </script>
+</body>
+</html>
